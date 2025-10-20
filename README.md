@@ -4,9 +4,9 @@
 
 ## Sekilas Tentang
 
-DailyTXT adalah aplikasi web berbasis teks yang dirancang untuk membantu pengguna menuliskan, menyimpan, dan merefleksikan catatan harian mereka secara aman dan privat. 
+DailyTXT merupakan aplikasi berbasis web yang dirancang untuk membantu pengguna menulis dan menyimpan catatan harian secara digital. Aplikasi ini memberikan ruang pribadi bagi pengguna untuk mengekspresikan pikiran, perasaan, maupun pengalaman sehari-hari dengan cara yang sederhana dan aman.
 
-Aplikasi ini berfungsi seperti jurnal digital sederhana yang dapat diakses melalui browser, dengan antarmuka minimalis yang fokus pada pengalaman menulis tanpa distraksi.
+Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaan menulis harian sebagai bentuk refleksi diri serta pengelolaan keseharian dalam format modern yang praktis.
 
 ## Instalasi
 
