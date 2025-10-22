@@ -47,6 +47,44 @@ Lalu kunjungi domain web
 
 ## Cara Pemakaian
 
+### Fitur-Fitur Utama
+
+1. Catatan Harian(Daily Entries)
+2. Keamanan Data dengan Enkripsi
+3. Pencarian dan Pengelompokan Catatan
+4. Dukungan Lampiran dan Template
+5. Tampilan Kalender dan Antarmuka Responsif
+6. Portabilitas dan Kendali Penuh Pengguna
+
+### Tampilan Aplikasi Web
+
+1. Register & Login
+   ![Register & Login Page](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Register%20%26%20Login%20Page.png)
+   Sebelum dapat mengakses catatan, pengguna diarahkan terlebih dahulu ke halaman login yang berfungsi sebagai lapisan keamanan utama.
+   Pada halaman ini, pengguna harus memasukkan master password yang telah dibuat sebelumnya. Password ini digunakan untuk mengenkripsi dan mendekripsi seluruh data catatan, sehingga hanya pemilik password yang dapat membaca isi catatan pribadi mereka.
+   
+3. Halaman Utama (Edit Mode)
+   ![Dashboard Edit Mode](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Dashboard%20Edit%20Mode.png)
+   Pada halaman utama DailyTxT, pengguna dapat melihat kalender harian di sisi kiri untuk memilih tanggal catatan.
+   Di bagian tengah terdapat area editor untuk menulis atau membaca entri, serta tombol upload di sisi kanan untuk menambahkan lampiran.
+   Fitur pencarian di bagian bawah kiri memudahkan pengguna menemukan catatan lama berdasarkan kata kunci.
+   Tampilan ini membantu pengguna mengelola catatan harian secara visual dan efisien, dengan navigasi sederhana berbasis kalender.
+   
+5. Halaman Utama (View Mode)
+   ![Dashboard View Mode](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Dashboard%20View%20Mode.png)
+   Disini pengguna hanya bisa melihat apa saja yang sudah ia tulis beserta detailnya.
+   
+7. Fitur History
+   ![Entries History](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Entries%20History.png)
+   DailyTxT menyediakan fitur History of the currently selected day yang memungkinkan pengguna melihat versi catatan terdahulu untuk tanggal tertentu.
+   Setiap kali pengguna menyimpan perubahan, sistem secara otomatis menyimpan versi lama tanpa menimpanya, sehingga pengguna bisa melihat atau mengembalikan isi catatan ke versi sebelumnya kapan saja.
+   
+9. Settings & Statistics
+   ![Settings](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Settings.png)
+   ![Statistics](https://github.com/alchalied/dailytxt-vps/blob/main/Screenshots/Statistics.png)
+   Pada page settings pengguna dapat mengatur appearance sesuai preferensi pengguna, functions (language, timezone, dll), edit & delete tags, membuat template, export data, security (change password, backup codes), dan user account(change & delete username).
+   DailyTxt juga menyediakan page statistics yang berisi data statistik semua aktivitas yang pernah dilakukan di dalam aplikasinya.
+   
 # Pembahasan
 
 ## Kelebihan & Kekurangan
