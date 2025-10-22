@@ -168,6 +168,7 @@ Aplikasi sudah dapat diakses pada <PORT_PUBLIK>:8000.
   ```
 
 # Konfigurasi:
+[`^ kembali ke atas ^`](#)
 
 Jika di awal memakai versi 1.x.x dari DailyTxT, ada beberapa hal yang perlu diperhatikan:
 
@@ -200,9 +201,10 @@ Tentang Enkripsi & Penyimpanan:
 - Tidak memakai end-to-end encryption di client, karena fitur pencarian berjalan di server.
 
 # Otomatisasi:
+[`^ kembali ke atas ^`](#)
+
 Terdapat cara otomatis untuk menginstall DailyTxT, yaitu dengan menjalankan `script shell` yang akan menjalankan semua perintah instalasi dalam terminal. Kami menyediakan 2 skrip pada repositori ini, yaitu `install_dailytxt.sh` jika sudah memiliki nama domain dan `install_dailytxxt_plain.sh` jika hanya memiliki publik IP. Versi yang terinstall adalah "2.0.0-testing.3".
 <img width="1392" height="945" alt="image" src="https://github.com/user-attachments/assets/3af8767c-3cdd-4acd-a288-50f05f980146" />
-
 Note: Untuk `install_dailytxt_plain.sh`, jika saat mengakses <PUBLIK_IP>:8000 tidak berhasil, pastikan protokol yang digunakan adalah HTTPS dan bukan HTTPS.
 
 # Cara Pemakaian
