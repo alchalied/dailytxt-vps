@@ -1,26 +1,36 @@
-# Projek_KDJK_kel1_P1
+### Projek KDJK Kelompok 1 (P1)
+### Anggota Kelompok :
+1. Grasela Anggi Asimima Marbun - G6401231025
+2. Adhiya Radhin Fasya - G6401231068
+3. Muhammad Abyan Putra Wibowo - G6401231078
+4. Muhammad Chalied Al Walid - G6401231114
+5. Davina Lydia Alessandra M - G6401231148
 
-# Aplikasi Web "DailyTxt"
+<h1 align="center"><img width="382" height="383" alt="image" src="https://github.com/user-attachments/assets/62217953-6c7b-4bf2-a1ac-f20b06988fff" /></h1>
 
-## Sekilas Tentang
+[Sekilas Tentang](#sekilas-tentang) | [Instalasi](#instalasi) | [Konfigurasi](#konfigurasi) | [Otomatisasi](#otomatisasi) | [Cara Pemakaian](#cara-pemakaian) | [Pembahasan](#pembahasan) | [Referensi](#referensi)
+:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+# Sekilas Tentang
 [`^ kembali ke atas ^`](#)
+
 DailyTXT merupakan aplikasi berbasis web yang dirancang untuk membantu pengguna menulis dan menyimpan catatan harian secara digital. Aplikasi ini memberikan ruang pribadi bagi pengguna untuk mengekspresikan pikiran, perasaan, maupun pengalaman sehari-hari dengan cara yang sederhana dan aman.
 
 Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaan menulis harian sebagai bentuk refleksi diri serta pengelolaan keseharian dalam format modern yang praktis.
 
-## Instalasi
+# Instalasi
 [`^ kembali ke atas ^`](#)
 
 #### Penjelasan Sistem :
-•	Aplikasi ditulis dengan Svelte (frontend) dan Go (backend).  ￼
-•	Dirancang untuk dijalankan menggunakan Docker dan Docker Compose.  ￼
-•	Mendukung sistem arsitektur: AMD64 dan ARM64.
-•	Nginx sebagai reverse proxy
-•	Certbot untuk SSL (HTTPS)
-•	Untuk pengembangan lokal:
-  •	Go versi minimal: 1.24
-  •	Node.js versi minimal: 24 (untuk frontend)  ￼
-•	Data disimpan dalam file JSON, bukan database tradisional, untuk portabilitas maksimal.
+- Aplikasi ditulis dengan Svelte (frontend) dan Go (backend).  ￼
+- Dirancang untuk dijalankan menggunakan Docker dan Docker Compose.  ￼
+- Mendukung sistem arsitektur: AMD64 dan ARM64.
+- Nginx sebagai reverse proxy
+- Certbot untuk SSL (HTTPS)
+- Untuk pengembangan lokal:
+  - Go versi minimal: 1.24
+  - Node.js versi minimal: 24 (untuk frontend)  ￼
+- Data disimpan dalam file JSON, bukan database tradisional, untuk portabilitas maksimal.
 
 #### Proses Instalasi :
 
@@ -109,7 +119,9 @@ Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaa
   ```
   pastikan port terdaftar.
 
-9. Konfigurasi Nginx sebagai reverse proxy (untuk HTTPS).
+Aplikasi sudah dapat diakses pada <PORT_PUBLIK>:8000.
+
+9. Konfigurasi Nginx sebagai reverse proxy (untuk HTTPS jika sudah memiliki nama domain).
   ```
   $ sudo nano /etc/nginx/sites-available/dailytxt
   ```
@@ -135,7 +147,7 @@ Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaa
   $ sudo systemctl restart nginx
   ```
 
-10. Tambahkan inbound port rule di Azure. Buka menu VM -> [Nama VM] -> Networking -> Add inbound port rule, hingga seperti ini:
+10. Pastikan semua port tersedia. Tambahkan inbound port rule jika belum dibuat pada Azure VM. Buka menu VM -> [Nama VM] -> Networking -> Add inbound port rule, hingga seperti ini:
 <img width="1146" height="176" alt="image" src="https://github.com/user-attachments/assets/761b3ae0-a31c-4298-8667-461b39fe6b90" />
 
 11. Aktifkan HTTPS dengan Let's Encrypt.
@@ -155,7 +167,42 @@ Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaa
   $ sudo docker-compose up -d
   ```
 
-## Cara Pemakaian
+# Konfigurasi:
+
+Jika di awal memakai versi 1.x.x dari DailyTxT, ada beberapa hal yang perlu diperhatikan:
+
+Panduan Migrasi DailyTxT v1 → v2
+Ringkasan Cepat:
+	1.	Backup dulu seluruh folder data dari versi 1.
+	2.	Gunakan file docker-compose.yml baru dan sesuaikan environment variable-nya.
+	3.	Gunakan volume/folder data lama. Jalankan image versi baru.
+	4.	Hapus cache browser khusus untuk situs DailyTxT agar bisa memuat versi baru.
+	5.	Hapus dan install ulang aplikasi mobile, jika sebelumnya digunakan.
+	6.	Migrasi akan otomatis berjalan saat user lama login pertama kali.
+
+Detail:
+	•	Versi 2 adalah rewrite total, port internal berubah ke 80, dan environment variable juga berubah.
+	•	Kalau hanya ganti tag Docker tanpa update file lain → akan muncul server error.
+	•	Saat container baru dijalankan, server memeriksa apakah ada data lama.
+	•	Jika ada, data lama dipindah ke subfolder old.
+	•	Saat user lama login, sistem otomatis memigrasi data dengan cara:
+	•	Dekripsi data lama pakai algoritma lama.
+	•	Enkripsi ulang pakai algoritma baru.
+	•	Proses cepat (beberapa detik per user, tergantung jumlah data).
+	•	Setelah semua user lama sudah login dan data berhasil dipindahkan, folder old bisa dihapus (manual atau lewat panel admin di DailyTxT).
+
+Tentang Enkripsi & Penyimpanan:
+	•	Menggunakan algoritma ChaCha20-Poly1305 untuk enkripsi.
+	•	Password diubah jadi derived key lewat Argon2id, disimpan di cookie HTTP-only.
+	•	Data tiap user disimpan terenkripsi di server, tanpa database (JSON file) agar mudah dipindah dan awet.
+	•	Jika password diganti, kunci enkripsi akan otomatis disesuaikan.
+	•	Ada backup key sebagai pengganti password jika lupa. Backup key hanya ditampilkan sekali saat dibuat.
+	•	Tidak memakai end-to-end encryption di client, karena fitur pencarian berjalan di server.
+
+# Otomatisasi:
+Terdapat cara otomatis untuk menginstall DailyTxT, yaitu dengan menjalankan `script shell` yang akan menjalankan semua perintah instalasi dalam terminal. Kami menyediakan 2 skrip pada repositori ini, yaitu `install_dailytxt.sh` jika sudah memiliki nama domain dan `install_dailytxxt_plain.sh` jika hanya memiliki publik IP.
+
+# Cara Pemakaian
 [`^ kembali ke atas ^`](#)
 
 ### Fitur-Fitur Utama
@@ -257,4 +304,4 @@ Simplenote menawarkan kemudahan akses lintas perangkat melalui akun cloud, namun
 
 **DailyTxt** hadir sebagai aplikasi **web ringan** yang memudahkan pengguna mencatat hal-hal penting setiap hari tanpa gangguan. **Dengan tampilan yang sederhana dan fokus pada teks**, DailyTxt membantu menjaga konsistensi menulis dan mendokumentasikan pikiran secara harian. **Sayangnya DailyTxt belum mendukung multi-user, tidak ada sistem autentikasi, dan penyimpanan masih bersifat lokal sehingga kurang cocok untuk penggunaan kolaboratif atau jangka panjang**.
 
-## Referensi
+# Referensi
