@@ -3,25 +3,80 @@
 # Aplikasi Web "DailyTxt"
 
 ## Sekilas Tentang
-
+[`^ kembali ke atas ^`](#)
 DailyTXT merupakan aplikasi berbasis web yang dirancang untuk membantu pengguna menulis dan menyimpan catatan harian secara digital. Aplikasi ini memberikan ruang pribadi bagi pengguna untuk mengekspresikan pikiran, perasaan, maupun pengalaman sehari-hari dengan cara yang sederhana dan aman.
 
 Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaan menulis harian sebagai bentuk refleksi diri serta pengelolaan keseharian dalam format modern yang praktis.
 
 ## Instalasi
+[`^ kembali ke atas ^`](#)
 
-Install Docker dan Docker Compose
-```
-sudo apt-get update
-sudo apt-get install -y docker docker-compose
-```
+#### Penjelasan Sistem :
+•	Aplikasi ditulis dengan Svelte (frontend) dan Go (backend).  ￼
+•	Dirancang untuk dijalankan menggunakan Docker dan Docker Compose.  ￼
+•	Mendukung sistem arsitektur: AMD64 dan ARM64.
+•	Nginx sebagai reverse proxy
+•	Certbot untuk SSL (HTTPS)
+•	Untuk pengembangan lokal:
+  •	Go versi minimal: 1.24
+  •	Node.js versi minimal: 24 (untuk frontend)  ￼
+•	Data disimpan dalam file JSON, bukan database tradisional, untuk portabilitas maksimal.
 
-Konfigurasi file docker-compose.yml
-```
-nano docker-compose.yml
-```
-```
-services:
+#### Proses Instalasi :
+
+1. Login ke Virtual Machine melalui SSH, di sini kami menggunakan Azure.
+  ```
+  $ ssh azureuser@xx.x.xx.xx
+  ```
+
+2. Perbarui paket sistem dan install dependensi utama seperti Docker, Docker Compose, Nginx, dan Certbot.
+  ```
+  $ sudo apt update && sudo apt upgrade -y
+  $ sudo apt install nginx python3-certbot-nginx -y
+
+    # Dari dokumentasi Docker untuk Ubuntu
+    # Add Docker's official GPG key:
+  $ sudo apt-get update
+  $ sudo apt-get install ca-certificates curl
+  $ sudo install -m 0755 -d /etc/apt/keyrings
+  $ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  $ sudo chmod a+r /etc/apt/keyrings/docker.asc
+    
+    # Add the repository to Apt sources:
+  $ echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+      $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $ sudo apt-get update
+
+    # Yang benar-benar dibutuhkan adalah docker dan docker compose, jadi tidak harus seperti di bawah ini.
+  $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  ```
+
+3. Aktifkan dan jalankan docker. Walau Docker akan berjalan secara otomatis setelah instalasi, beberapa sistem perlu untuk dijalankan manual.
+  ```
+  $ sudo systemctl status docker
+  $ sudo systemctl start docker
+  ```
+
+4. Buat direktori aplikasi DailyTxT.
+  ```
+  $ mkdir ~/DailyTxT && cd ~/DailyTxT
+  ```
+
+5. Git clone repository DailyTxT.
+  ```
+  $ git clone https://github.com/PhiTux/DailyTxT.git   
+  ```
+
+6. Edit file docker-compose.yml.
+  ```
+  $ nano docker-compose.yml
+  ```
+
+  Isi dengan konfigurasi berikut:
+  ```
+  services:
   dailytxt:
     image: phitux/dailytxt:2.0.0-testing.3
     container_name: dailytxt
@@ -29,23 +84,79 @@ services:
     volumes:
       - ./data:/data
     environment:
-      - SECRET_TOKEN=testingAja
+      - SECRET_TOKEN=isi_dengan_token_anda
       - INDENT=4
       - ALLOW_REGISTRATION=true
-      - ADMIN_PASSWORD=secret123
+      - ADMIN_PASSWORD=isi_dengan_password_anda
       - LOGOUT_AFTER_DAYS=40
     ports:
-      - 127.0.0.1:8000:80
-```
+      - "127.0.0.1:8000:80"
+  ```
+  Image dapat diubah sesuai versi yang ingin digunakan, di sini kami menggunakan versi "2.0.0-testing.3". Informasi lengkapnya dapat dilihat di github DailyTxT (https://github.com/PhiTux/DailyTxT/tree/main?tab=readme-ov-file#changelog)
+  Secret_Token dan Admin_Password dapat diisi nilai apapun, contohnya dengan generate token acak dengan OpenSSL:
+  ```
+  $ openssl rand -base64 32
+  ```
 
-Jalankan Aplikasi
-```
-sudo docker compose up -d
-```
+7. Jalankan container DailyTxT.
+  ```
+  $ sudo docker compose up -d
+  ```
 
-Lalu kunjungi domain web
+8. Cek status container.
+  ```
+  $ sudo docker ps -a
+  ```
+  pastikan port terdaftar.
+
+9. Konfigurasi Nginx sebagai reverse proxy (untuk HTTPS).
+  ```
+  $ sudo nano /etc/nginx/sites-available/dailytxt
+  ```
+
+  isi dengan:
+  ```
+  server {
+    listen 80;
+    server_name your-domain.com;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+  }
+  ```
+  your-domain.com dapat diubah menjadi DNS atau public IP VM.
+
+  simpan file, lalu aktifkan konfigurasi:
+  ```
+  $ sudo ln -s /etc/nginx/sites-available/dailytxt /etc/nginx/sites-enabled/
+  $ sudo nginx -t
+  $ sudo systemctl restart nginx
+  ```
+
+10. Tambahkan inbound port rule di Azure. Buka menu VM -> [Nama VM] -> Networking -> Add inbound port rule, hingga seperti ini:
+<img width="1146" height="176" alt="image" src="https://github.com/user-attachments/assets/761b3ae0-a31c-4298-8667-461b39fe6b90" />
+
+11. Aktifkan HTTPS dengan Let's Encrypt.
+  ```
+  $ sudo certbot --nginx -d your-domain.com
+  ```
+
+12. Matikan pendaftaran user baru (opsional).
+  Setelah membuat sebuah akun, edit file docker-compose.yml
+  ```
+  - ALLOW_REGISTRATION=false
+  ```
+
+  lalu restart container:
+  ```
+  $ sudo docker-compose down
+  $ sudo docker-compose up -d
+  ```
 
 ## Cara Pemakaian
+[`^ kembali ke atas ^`](#)
 
 ### Fitur-Fitur Utama
 
@@ -86,6 +197,7 @@ Lalu kunjungi domain web
    DailyTxt juga menyediakan page statistics yang berisi data statistik semua aktivitas yang pernah dilakukan di dalam aplikasinya.
    
 # Pembahasan
+[`^ kembali ke atas ^`](#)
 
 ## Kelebihan & Kekurangan
 
@@ -124,6 +236,7 @@ Lalu kunjungi domain web
    Aplikasi ini tidak memiliki fitur pengingat otomatis untuk catatan atau tugas tertentu.
 
 ## Perbandingan dengan Aplikasi Web Sejenis
+[`^ kembali ke atas ^`](#)
 
 ### 1. **DailyTxT vs Notion**
 DailyTxT lebih ringan dan sederhana dibandingkan Notion yang berfokus pada kolaborasi dan manajemen proyek. Jika Notion menawarkan banyak fitur seperti integrasi database, template, dan kolaborasi real-time, DailyTxT lebih diarahkan untuk penggunaan pribadi tanpa ketergantungan pada layanan cloud. Selain itu, DailyTxT dapat di-host secara mandiri dengan kontrol penuh atas data, sedangkan Notion sepenuhnya bergantung pada server pihak ketiga.
