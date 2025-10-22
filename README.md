@@ -87,8 +87,23 @@ Lalu kunjungi domain web
 
 ## Perbandingan dengan Aplikasi Web Sejenis
 
+### 1. **DailyTxT vs Notion**
+DailyTxT lebih ringan dan sederhana dibandingkan Notion yang berfokus pada kolaborasi dan manajemen proyek. Jika Notion menawarkan banyak fitur seperti integrasi database, template, dan kolaborasi real-time, DailyTxT lebih diarahkan untuk penggunaan pribadi tanpa ketergantungan pada layanan cloud. Selain itu, DailyTxT dapat di-host secara mandiri dengan kontrol penuh atas data, sedangkan Notion sepenuhnya bergantung pada server pihak ketiga.
+
+### 2. **DailyTxT vs Joplin**
+Kedua aplikasi ini sama-sama mendukung Markdown dan cocok untuk pencatatan pribadi. Namun, DailyTxT lebih mudah dipasang dan dijalankan menggunakan Docker, sementara Joplin memerlukan konfigurasi tambahan untuk sinkronisasi lintas perangkat. Joplin unggul dalam fitur sinkronisasi dan integrasi cloud, sedangkan DailyTxT menonjol karena kesederhanaannya dan kebutuhan server yang ringan.
+
+### 3. **DailyTxT vs Standard Notes**
+Standard Notes unggul dalam keamanan karena mendukung enkripsi end-to-end, namun tampilannya lebih minimalis dan beberapa fitur tambahannya berbayar. DailyTxT, di sisi lain, bersifat open-source sepenuhnya dan mudah dikustomisasi sesuai kebutuhan pengguna. Meskipun tidak memiliki enkripsi sekuat Standard Notes, DailyTxT tetap menjaga privasi dengan menyimpan data secara lokal di server pengguna.
+
+### 4. **DailyTxT vs Obsidian**
+Obsidian dirancang untuk pengguna yang ingin mengelola catatan lokal secara kompleks dengan konsep knowledge graph. Sementara itu, DailyTxT lebih fokus pada catatan harian yang cepat dan efisien tanpa fitur visualisasi hubungan antar catatan. Obsidian cocok untuk penulis dan peneliti, sedangkan DailyTxT lebih sesuai untuk pengguna yang ingin journaling sederhana berbasis web.
+
+### 5. **DailyTxT vs Simplenote**
+Simplenote menawarkan kemudahan akses lintas perangkat melalui akun cloud, namun data disimpan di server pihak ketiga. DailyTxT memberikan kontrol penuh atas penyimpanan data melalui hosting mandiri. Walau Simplenote unggul dalam sinkronisasi dan aksesibilitas, DailyTxT memberikan keunggulan dalam privasi serta kemampuan untuk diatur sesuai kebutuhan pengguna.
+
 ## Kesimpulan
 
-DailyTxt hadir sebagai aplikasi web ringan yang memudahkan pengguna mencatat hal-hal penting setiap hari tanpa gangguan. Dengan tampilan yang sederhana dan fokus pada teks, DailyTxt membantu menjaga konsistensi menulis dan mendokumentasikan pikiran secara harian. Sayangnya DailyTxt belum mendukung multi-user, tidak ada sistem autentikasi, dan penyimpanan masih bersifat lokal sehingga kurang cocok untuk penggunaan kolaboratif atau jangka panjang.
+**DailyTxt** hadir sebagai aplikasi **web ringan** yang memudahkan pengguna mencatat hal-hal penting setiap hari tanpa gangguan. **Dengan tampilan yang sederhana dan fokus pada teks**, DailyTxt membantu menjaga konsistensi menulis dan mendokumentasikan pikiran secara harian. **Sayangnya DailyTxt belum mendukung multi-user, tidak ada sistem autentikasi, dan penyimpanan masih bersifat lokal sehingga kurang cocok untuk penggunaan kolaboratif atau jangka panjang**.
 
 ## Referensi
