@@ -1,3 +1,8 @@
+<h1 align="center"><img width="382" height="383" alt="image" src="https://github.com/user-attachments/assets/62217953-6c7b-4bf2-a1ac-f20b06988fff" /></h1>
+
+[Sekilas Tentang](#sekilas-tentang) | [Instalasi](#instalasi) | [Konfigurasi](#konfigurasi) | [Otomatisasi](#otomatisasi) | [Cara Pemakaian](#cara-pemakaian) | [Pembahasan](#pembahasan) | [Referensi](#referensi)
+:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
 ### Projek KDJK Kelompok 1 (P1)
 ### Anggota Kelompok :
 1. Grasela Anggi Asimima Marbun - G6401231025
@@ -5,11 +10,6 @@
 3. Muhammad Abyan Putra Wibowo - G6401231078
 4. Muhammad Chalied Al Walid - G6401231114
 5. Davina Lydia Alessandra M - G6401231148
-
-<h1 align="center"><img width="382" height="383" alt="image" src="https://github.com/user-attachments/assets/62217953-6c7b-4bf2-a1ac-f20b06988fff" /></h1>
-
-[Sekilas Tentang](#sekilas-tentang) | [Instalasi](#instalasi) | [Konfigurasi](#konfigurasi) | [Otomatisasi](#otomatisasi) | [Cara Pemakaian](#cara-pemakaian) | [Pembahasan](#pembahasan) | [Referensi](#referensi)
-:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
 # Sekilas Tentang
 [`^ kembali ke atas ^`](#)
@@ -102,7 +102,7 @@ Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaa
     ports:
       - "127.0.0.1:8000:80"
   ```
-  Image dapat diubah sesuai versi yang ingin digunakan, di sini kami menggunakan versi "2.0.0-testing.3". Informasi lengkapnya dapat dilihat di github DailyTxT (https://github.com/PhiTux/DailyTxT/tree/main?tab=readme-ov-file#changelog)
+  Image dapat diubah sesuai versi yang ingin digunakan, di sini kami menggunakan versi "2.0.0-testing.3". Informasi lengkapnya dapat dilihat di github DailyTxT.
   Secret_Token dan Admin_Password dapat diisi nilai apapun, contohnya dengan generate token acak dengan OpenSSL:
   ```
   $ openssl rand -base64 32
@@ -173,34 +173,37 @@ Jika di awal memakai versi 1.x.x dari DailyTxT, ada beberapa hal yang perlu dipe
 
 Panduan Migrasi DailyTxT v1 → v2
 Ringkasan Cepat:
-	1.	Backup dulu seluruh folder data dari versi 1.
-	2.	Gunakan file docker-compose.yml baru dan sesuaikan environment variable-nya.
-	3.	Gunakan volume/folder data lama. Jalankan image versi baru.
-	4.	Hapus cache browser khusus untuk situs DailyTxT agar bisa memuat versi baru.
-	5.	Hapus dan install ulang aplikasi mobile, jika sebelumnya digunakan.
-	6.	Migrasi akan otomatis berjalan saat user lama login pertama kali.
+1. Backup dulu seluruh folder data dari versi 1.
+2. Gunakan file docker-compose.yml baru dan sesuaikan environment variable-nya.
+3. Gunakan volume/folder data lama. Jalankan image versi baru.
+4. Hapus cache browser khusus untuk situs DailyTxT agar bisa memuat versi baru.
+5. Hapus dan install ulang aplikasi mobile, jika sebelumnya digunakan.
+6. Migrasi akan otomatis berjalan saat user lama login pertama kali.
 
 Detail:
-	•	Versi 2 adalah rewrite total, port internal berubah ke 80, dan environment variable juga berubah.
-	•	Kalau hanya ganti tag Docker tanpa update file lain → akan muncul server error.
-	•	Saat container baru dijalankan, server memeriksa apakah ada data lama.
-	•	Jika ada, data lama dipindah ke subfolder old.
-	•	Saat user lama login, sistem otomatis memigrasi data dengan cara:
-	•	Dekripsi data lama pakai algoritma lama.
-	•	Enkripsi ulang pakai algoritma baru.
-	•	Proses cepat (beberapa detik per user, tergantung jumlah data).
-	•	Setelah semua user lama sudah login dan data berhasil dipindahkan, folder old bisa dihapus (manual atau lewat panel admin di DailyTxT).
+- Versi 2 adalah rewrite total, port internal berubah ke 80, dan environment variable juga berubah.
+- Kalau hanya ganti tag Docker tanpa update file lain → akan muncul server error.
+- Saat container baru dijalankan, server memeriksa apakah ada data lama.
+- Jika ada, data lama dipindah ke subfolder old.
+- Saat user lama login, sistem otomatis memigrasi data dengan cara:
+- Dekripsi data lama pakai algoritma lama.
+- Enkripsi ulang pakai algoritma baru.
+- Proses cepat (beberapa detik per user, tergantung jumlah data).
+- Setelah semua user lama sudah login dan data berhasil dipindahkan, folder old bisa dihapus (manual atau lewat panel admin di DailyTxT).
 
 Tentang Enkripsi & Penyimpanan:
-	•	Menggunakan algoritma ChaCha20-Poly1305 untuk enkripsi.
-	•	Password diubah jadi derived key lewat Argon2id, disimpan di cookie HTTP-only.
-	•	Data tiap user disimpan terenkripsi di server, tanpa database (JSON file) agar mudah dipindah dan awet.
-	•	Jika password diganti, kunci enkripsi akan otomatis disesuaikan.
-	•	Ada backup key sebagai pengganti password jika lupa. Backup key hanya ditampilkan sekali saat dibuat.
-	•	Tidak memakai end-to-end encryption di client, karena fitur pencarian berjalan di server.
+- Menggunakan algoritma ChaCha20-Poly1305 untuk enkripsi.
+- Password diubah jadi derived key lewat Argon2id, disimpan di cookie HTTP-only.
+- Data tiap user disimpan terenkripsi di server, tanpa database (JSON file) agar mudah dipindah dan awet.
+- Jika password diganti, kunci enkripsi akan otomatis disesuaikan.
+- Ada backup key sebagai pengganti password jika lupa. Backup key hanya ditampilkan sekali saat dibuat.
+- Tidak memakai end-to-end encryption di client, karena fitur pencarian berjalan di server.
 
 # Otomatisasi:
-Terdapat cara otomatis untuk menginstall DailyTxT, yaitu dengan menjalankan `script shell` yang akan menjalankan semua perintah instalasi dalam terminal. Kami menyediakan 2 skrip pada repositori ini, yaitu `install_dailytxt.sh` jika sudah memiliki nama domain dan `install_dailytxxt_plain.sh` jika hanya memiliki publik IP.
+Terdapat cara otomatis untuk menginstall DailyTxT, yaitu dengan menjalankan `script shell` yang akan menjalankan semua perintah instalasi dalam terminal. Kami menyediakan 2 skrip pada repositori ini, yaitu `install_dailytxt.sh` jika sudah memiliki nama domain dan `install_dailytxxt_plain.sh` jika hanya memiliki publik IP. Versi yang terinstall adalah "2.0.0-testing.3".
+<img width="1392" height="945" alt="image" src="https://github.com/user-attachments/assets/3af8767c-3cdd-4acd-a288-50f05f980146" />
+
+Note: Untuk `install_dailytxt_plain.sh`, jika saat mengakses <PUBLIK_IP>:8000 tidak berhasil, pastikan protokol yang digunakan adalah HTTPS dan bukan HTTPS.
 
 # Cara Pemakaian
 [`^ kembali ke atas ^`](#)
@@ -305,3 +308,7 @@ Simplenote menawarkan kemudahan akses lintas perangkat melalui akun cloud, namun
 **DailyTxt** hadir sebagai aplikasi **web ringan** yang memudahkan pengguna mencatat hal-hal penting setiap hari tanpa gangguan. **Dengan tampilan yang sederhana dan fokus pada teks**, DailyTxt membantu menjaga konsistensi menulis dan mendokumentasikan pikiran secara harian. **Sayangnya DailyTxt belum mendukung multi-user, tidak ada sistem autentikasi, dan penyimpanan masih bersifat lokal sehingga kurang cocok untuk penggunaan kolaboratif atau jangka panjang**.
 
 # Referensi
+[`^ kembali ke atas ^`](#)
+
+1. [DailyTxT by PhiTux](https://github.com/PhiTux/DailyTxT) - DailyTxT Docs
+2. [Docker & Docker Compose for Ubuntu](https://docs.docker.com/engine/install/ubuntu/) - Docker Docs
