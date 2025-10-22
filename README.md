@@ -51,6 +51,40 @@ Lalu kunjungi domain web
 
 ## Kelebihan & Kekurangan
 
+### Kelebihan
+
+1. **Sederhana dan Ringan**  
+   DailyTxT memiliki antarmuka minimalis tanpa fitur berlebihan, sehingga cepat diakses bahkan di server dengan spesifikasi rendah.
+
+2. **Mendukung Multi-User**  
+   Aplikasi ini mendukung beberapa pengguna dengan sistem autentikasi login yang terpisah untuk setiap akun.
+
+3. **Data Tersimpan Lokal (Self-Hosted)**  
+   Semua catatan disimpan secara lokal dalam format JSON, memberi kontrol penuh terhadap privasi dan keamanan data pengguna.
+
+4. **Mudah Dikonfigurasi**  
+   Pengguna hanya perlu mengatur beberapa variabel lingkungan di `docker-compose.yml` untuk menjalankan aplikasi.
+
+5. **Mendukung Markdown dan Mode Gelap**  
+   DailyTxT mendukung format Markdown untuk menulis catatan dengan gaya bebas, serta tersedia opsi mode gelap untuk kenyamanan visual.
+
+### Kekurangan
+
+1. **Tidak Ada Sinkronisasi Cloud Bawaan**  
+   Aplikasi belum menyediakan integrasi langsung dengan layanan cloud seperti Google Drive atau Dropbox.
+
+2. **Belum Ada Fitur Kolaborasi Real-Time**  
+   Pengguna tidak dapat mengedit catatan secara bersamaan dengan orang lain dalam waktu nyata.
+
+3. **Tampilan Masih Sederhana**  
+   Antarmuka fokus pada fungsi, bukan estetika — belum banyak opsi kustomisasi tampilan.
+
+4. **Backup Manual**  
+   Karena penyimpanan berbasis file lokal, pengguna harus membuat cadangan data secara manual atau dengan script tambahan.
+
+5. **Belum Mendukung Notifikasi atau Reminder**  
+   Aplikasi ini tidak memiliki fitur pengingat otomatis untuk catatan atau tugas tertentu.
+
 ## Perbandingan dengan Aplikasi Web Sejenis
 
 ## Kesimpulan
