@@ -121,7 +121,10 @@ Melalui tampilan yang minimalis dan kemudahan akses, DailyTXT mendukung kebiasaa
 
 Aplikasi sudah dapat diakses pada <PORT_PUBLIK>:8000.
 
-9. Konfigurasi Nginx sebagai reverse proxy (untuk HTTPS jika sudah memiliki nama domain).
+9. Pastikan semua port tersedia. Tambahkan inbound port rule jika belum dibuat pada Azure VM. Buka menu VM -> [Nama VM] -> Networking -> Add inbound port rule, hingga seperti ini:
+<img width="1146" height="176" alt="image" src="https://github.com/user-attachments/assets/761b3ae0-a31c-4298-8667-461b39fe6b90" />
+
+10. Konfigurasi Nginx sebagai reverse proxy (untuk HTTPS jika sudah memiliki nama domain).
   ```
   $ sudo nano /etc/nginx/sites-available/dailytxt
   ```
@@ -138,7 +141,7 @@ Aplikasi sudah dapat diakses pada <PORT_PUBLIK>:8000.
     }
   }
   ```
-  your-domain.com dapat diubah menjadi DNS atau public IP VM.
+  your-domain.com dapat diubah menjadi DNS app.
 
   simpan file, lalu aktifkan konfigurasi:
   ```
@@ -146,9 +149,6 @@ Aplikasi sudah dapat diakses pada <PORT_PUBLIK>:8000.
   $ sudo nginx -t
   $ sudo systemctl restart nginx
   ```
-
-10. Pastikan semua port tersedia. Tambahkan inbound port rule jika belum dibuat pada Azure VM. Buka menu VM -> [Nama VM] -> Networking -> Add inbound port rule, hingga seperti ini:
-<img width="1146" height="176" alt="image" src="https://github.com/user-attachments/assets/761b3ae0-a31c-4298-8667-461b39fe6b90" />
 
 11. Aktifkan HTTPS dengan Let's Encrypt.
   ```
